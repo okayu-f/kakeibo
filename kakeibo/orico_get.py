@@ -19,6 +19,9 @@ def orico_get(username: str, password: str):
 
     wait = WebDriverWait(driver, 10)
 
+    cookie_close = driver.find_element_by_css_selector("#datasign_cmp__cmp_close_button")
+    cookie_close.click()
+
     user_name = driver.find_element_by_name("LoginId")
     user_name.send_keys(username)
 
