@@ -8,7 +8,10 @@ import time
 from config import pw
 
 
-def orico_get(username, password):
+def orico_get(username: str, password: str):
+    '''
+    username,passwordを引数にして、CSVをダウンロードする
+    '''
 
     driver = webdriver.Chrome("/usr/local/bin/chromedriver")
 
@@ -25,7 +28,7 @@ def orico_get(username, password):
     login_btn = driver.find_element_by_css_selector("#base tr > td > a > img")
     login_btn.click()
 
-    token = input("画像認証のひらがな3文字を入力してください：")
+    token = input("画像認証のひらがな3文字を入力してください:")
     token_form = driver.find_element_by_name("token")
     token_form.send_keys(token)
 
