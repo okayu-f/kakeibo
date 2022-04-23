@@ -12,11 +12,11 @@ def orico_get(username: str, password: str):
     driver.get("https://my.orico.co.jp/eorico/login.do")
 
     ex_driver.click_css(driver, "#datasign_cmp__cmp_close_button")  # cookie agreement close button
-    ex_driver.send_key_by_name(driver, username, "LoginId")
-    ex_driver.send_key_by_name(driver, password, "Pwd")
+    ex_driver.send_key_name(driver, username, "LoginId")
+    ex_driver.send_key_name(driver, password, "Pwd")
     ex_driver.click_css(driver, "#base tr > td > a > img")  # login_button
     token = input("画像認証のひらがな3文字を入力してください:")
-    ex_driver.send_key_by_name(driver, token, "token")
+    ex_driver.send_key_name(driver, token, "token")
     ex_driver.click_css(driver, "#base input[type=image]")  # login_button
     driver.get("https://my.orico.co.jp/eorico/KAL1B10003.do?SelIndex=0")
     driver.get("https://my.orico.co.jp/eorico/KAL1B10013.do?SelIndex=0")

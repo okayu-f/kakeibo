@@ -18,6 +18,11 @@ def click_css(driver, css_selector):
     link.click()
 
 
+def send_key_name(driver, key, name):
+    form = driver.find_element_by_name(name)
+    form.send_keys(key)
+
+
 def wait_click_css(wait, css_selector):
     link = wait.until(expected_conditions.element_to_be_clickable((By.CSS_SELECTOR, css_selector)))
     link.click()
@@ -28,9 +33,9 @@ def wait_click_name(wait, name):
     link.click()
 
 
-def send_key_by_name(driver, key, name):
-    user_pass = driver.find_element_by_name(name)
-    user_pass.send_keys(key)
+def wait_send_key_name(wait, key, name):
+    form = wait.until(expected_conditions.visibility_of_element_located((By.NAME, name)))
+    form.send_keys(key)
 
 
 def hover_css(driver, css_selector):
