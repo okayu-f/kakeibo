@@ -22,6 +22,9 @@ def wait_click_css(wait, css_selector):
     link = wait.until(expected_conditions.element_to_be_clickable((By.CSS_SELECTOR, css_selector)))
     link.click()
 
+def wait_click_name(wait, name):
+    link = wait.until(expected_conditions.element_to_be_clickable((By.NAME, name)))
+    link.click()
 
 def send_key_by_name(driver, key, name):
     user_pass = driver.find_element_by_name(name)
