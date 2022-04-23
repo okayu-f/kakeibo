@@ -1,11 +1,6 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-# from selenium.webdriver.support.select import Select
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.common.action_chains import ActionChains
 import time
 from config import pw
+from util import ex_driver
 
 
 def orico_get(username: str, password: str):
@@ -13,46 +8,28 @@ def orico_get(username: str, password: str):
     username,passwordを引数にして、CSVをダウンロードする
     '''
 
-    driver = webdriver.Chrome("/usr/local/bin/chromedriver")
+    driver = ex_driver.set_driver()
+    wait = ex_driver.set_wait(driver)
 
     driver.get("https://my.orico.co.jp/eorico/login.do")
 
-    wait = WebDriverWait(driver, 10)
-
-    cookie_close = driver.find_element_by_css_selector("#datasign_cmp__cmp_close_button")
-    cookie_close.click()
-
-    user_name = driver.find_element_by_name("LoginId")
-    user_name.send_keys(username)
-
-    user_pass = driver.find_element_by_name("Pwd")
-    user_pass.send_keys(password)
-
-    login_btn = driver.find_element_by_css_selector("#base tr > td > a > img")
-    login_btn.click()
-
+    ex_driver.click_css(driver, "#datasign_cmp__cmp_close_button")  # cookie agreement close button
+    ex_driver.send_key_by_name(driver, username, "LoginId")
+    ex_driver.send_key_by_name(driver, password, "Pwd")
+    ex_driver.click_css(driver, "#base tr > td > a > img")  # login_button
     token = input("画像認証のひらがな3文字を入力してください:")
-    token_form = driver.find_element_by_name("token")
-    token_form.send_keys(token)
+    ex_driver.send_key_by_name(driver, token, "token")
+    ex_driver.click_css(driver, "#base input[type=image]")  # login_button
+    ex_driver.hover_css(driver, "#gnavi1 > a > img")  # hover to "ご利用照会"
+    ex_driver.wait_click_css(wait, "#subnavi1 p:nth-child(1) a")  # ご請求額照会
+    ex_driver.click_css(driver, "table:nth-child(4) a")  # カードのリンク
+    ex_driver.click_css(driver, "CSV")
 
-    login_btn = driver.find_element_by_css_selector("#base input[type=image]")
-    login_btn.click()
-
-    actions = ActionChains(driver)
-    actions.move_to_element(driver.find_element_by_css_selector("#gnavi1 > a > img")).perform()
-    # Invoice_link = driver.find_element_by_css_selector("#subnavi1 p:nth-child(1) a")
-    Invoice_link = wait.until(expected_conditions.element_to_be_clickable((By.CSS_SELECTOR, "#subnavi1 p:nth-child(1) a")))
-    Invoice_link.click()
-
-    card_link = driver.find_element_by_css_selector("table:nth-child(4) a")
-    card_link.click()
-
-    csv_download = driver.find_element_by_partial_link_text("CSV")
-    csv_download.click()
-
-    time.sleep(3)
-    driver.close()
+    return driver
 
 
 if __name__ == '__main__':
-    orico_get(pw.orico_username, pw.orico_password)
+    driver = orico_get(pw.orico_username, pw.orico_password)
+    time.sleep(3)
+    driver.close()
+
