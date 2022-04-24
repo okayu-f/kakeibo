@@ -11,7 +11,8 @@ def aeon_c_get(username, password, expiration_month, expiration_year, security_c
     ex_driver.wait_send_key_name(wait, username, "username")
     ex_driver.send_key_name(driver, password, "password")
     ex_driver.wait_click_css(wait, "div.m-buttoncontainer")  # ログインボタン
-
+    time.sleep(3)
+    
     driver.get("https://www.aeon.co.jp/app/details/download/")
     ex_driver.wait_send_key_name(wait, expiration_month, "expiration_month")
     ex_driver.wait_send_key_name(wait, expiration_year, "expiration_year")

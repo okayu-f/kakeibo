@@ -6,7 +6,16 @@ from selenium.webdriver.support import expected_conditions
 
 
 def set_driver():
-    return webdriver.Chrome("/usr/local/bin/chromedriver")
+    options = webdriver.ChromeOptions()
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--lang=ja-JP')
+    options.add_argument('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36')
+    options.add_argument('--disable-blink-features=AutomationControlled')
+    options.add_experimental_option('useAutomationExtension', False)
+    options.add_experimental_option("excludeSwitches", ['enable-automation'])
+    driver = webdriver.Chrome(executable_path="/usr/local/bin/chromedriver", options=options)
+    return driver
 
 
 def set_wait(driver):
