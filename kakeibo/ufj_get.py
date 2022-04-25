@@ -17,10 +17,12 @@ def ufj_get(username, password):
     ex_driver.wait_click_css(wait, "div.data_footer td.first_child")  # ダウンロードリンク
     ex_driver.click_css(driver, "div.admb_l > button")  # ダウンロードボタン
 
+    time.sleep(3)
+
+    time.sleep(3)
     return driver
 
 
 if __name__ == '__main__':
     driver = ufj_get(pw.ufj_username, pw.ufj_password)
-    time.sleep(3)
     driver.close()
