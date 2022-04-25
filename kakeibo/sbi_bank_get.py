@@ -17,10 +17,10 @@ def sbi_bank_get(username, password):
     ex_driver.wait_click_css(wait, "div.details-sort.ng-tns-c3-3.ng-star-inserted li.ng-tns-c3-3.ng-star-inserted.notActive")
     ex_driver.wait_click_css(wait, "dl.details-download a.details-iconExcel")
 
+    time.sleep(3)
     return driver
 
 
 if __name__ == '__main__':
     driver = sbi_bank_get(pw.sbi_bank_b_user, pw.sbi_bank_b_pass)
-    time.sleep(3)
     driver.close()

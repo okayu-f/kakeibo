@@ -21,10 +21,10 @@ def orico_get(username: str, password: str):
     driver.get("https://my.orico.co.jp/eorico/KAL1B10003.do?SelIndex=0")
     driver.get("https://my.orico.co.jp/eorico/KAL1B10013.do?SelIndex=0")
 
+    time.sleep(3)
     return driver
 
 
 if __name__ == '__main__':
     driver = orico_get(pw.orico_username, pw.orico_password)
-    time.sleep(3)
     driver.close()
