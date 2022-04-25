@@ -27,13 +27,13 @@ def click_css(driver, css_selector):
     link.click()
 
 
-def send_key_name(driver, key, name):
-    form = driver.find_element_by_name(name)
+def send_key_css(driver, key, css_selector):
+    form = driver.find_element_by_css_selector(css_selector)
     form.send_keys(key)
 
 
-def send_key_css(driver, key, css_selector):
-    form = driver.find_element_by_css_selector(css_selector)
+def send_key_name(driver, key, name):
+    form = driver.find_element_by_name(name)
     form.send_keys(key)
 
 
@@ -45,6 +45,11 @@ def wait_click_css(wait, css_selector):
 def wait_click_name(wait, name):
     link = wait.until(expected_conditions.element_to_be_clickable((By.NAME, name)))
     link.click()
+
+
+def wait_send_key_css(wait, key, css_selector):
+    form = wait.until(expected_conditions.visibility_of_element_located((By.CSS_SELECTOR, css_selector)))
+    form.send_keys(key)
 
 
 def wait_send_key_name(wait, key, name):
