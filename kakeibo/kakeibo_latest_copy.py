@@ -6,6 +6,7 @@ import os
 import datetime
 from sbi_bank_get import sbi_bank_get
 from orico_get import orico_get
+from try_get import try_get
 from config import pw
 
 now = datetime.datetime.now()
@@ -14,7 +15,7 @@ data_path = './data/' + today
 os.makedirs(data_path, exist_ok=True)
 
 print('start driver...')
-orico_get(pw.orico_username, pw.orico_password)
+try_get(orico_get, pw.orico_username, pw.orico_password)
 csv_path = latest_csv_move_to(data_path)
 
 sheet_name = 'orico'
@@ -32,7 +33,7 @@ wb = load_workbook('./data/★家計簿190429.xlsx')
 latest_copy(wb, sheet_name, csv_file, csv_date_column_name, csv_date_fmt, date_column, key_column1, key_column2, csv_skiprows)
 
 print('sbi_bank_get1...')
-sbi_bank_get(pw.sbi_bank_a_name, pw.sbi_bank_a_pass)
+try_get(sbi_bank_get, pw.sbi_bank_a_name, pw.sbi_bank_a_pass)
 
 csv_path = latest_csv_move_to(data_path)
 
@@ -48,7 +49,7 @@ csv_skiprows = 0
 latest_copy_depck(wb, sheet_name, csv_file, csv_date_column_name, csv_date_fmt, date_column, key_column1, key_column2, csv_skiprows)
 
 print('sbi_bank_get2...')
-sbi_bank_get(pw.sbi_bank_b_name, pw.sbi_bank_b_pass)
+try_get(sbi_bank_get, pw.sbi_bank_b_name, pw.sbi_bank_b_pass)
 
 csv_path = latest_csv_move_to(data_path)
 
@@ -63,7 +64,7 @@ csv_skiprows = 0
 
 latest_copy_depck(wb, sheet_name, csv_file, csv_date_column_name, csv_date_fmt, date_column, key_column1, key_column2, csv_skiprows)
 
-aeon_c_get(pw.aeon_c_username, pw.aeon_c_password, pw.aeon_c_expiration_month, pw.aeon_c_expiration_year, pw.aeon_c_security_code)
+try_get(aeon_c_get, pw.aeon_c_username, pw.aeon_c_password, pw.aeon_c_expiration_month, pw.aeon_c_expiration_year, pw.aeon_c_security_code)
 csv_path = latest_csv_move_to(data_path)
 
 
@@ -80,7 +81,7 @@ csv_footerrows = 3
 latest_copy(wb, sheet_name, csv_file, csv_date_column_name, csv_date_fmt, date_column, key_column1, key_column2, csv_skiprows, csv_footerrows)
 
 print('ufj_get...')
-ufj_get(pw.ufj_username, pw.ufj_password)
+try_get(ufj_get, pw.ufj_username, pw.ufj_password)
 csv_path = latest_csv_move_to(data_path)
 
 sheet_name = 'UFJ'
