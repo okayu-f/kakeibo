@@ -17,3 +17,6 @@ sbi_bank_b_pass = 'hogehoge'
 
 ufj_username = 'hogehoge'
 ufj_password = 'hogehoge'
+
+rakuten_c_mail = 'hogehoge'
+rakuten_c_pass = 'hogehoge'
