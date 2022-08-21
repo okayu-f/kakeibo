@@ -14,7 +14,7 @@ def set_driver():
     options.add_argument('--disable-blink-features=AutomationControlled')
     options.add_experimental_option('useAutomationExtension', False)
     options.add_experimental_option("excludeSwitches", ['enable-automation'])
-    driver = webdriver.Chrome(executable_path="/usr/local/bin/chromedriver", options=options)
+    driver = webdriver.Chrome(executable_path="/opt/homebrew/bin/chromedriver", options=options)
     return driver
 
 
