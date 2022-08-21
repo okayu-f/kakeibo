@@ -1,0 +1,48 @@
+{
+  "orico" : {
+    "sheet_name" : "orico",
+    "csv_date_column_name" : "ご利用日",
+    "csv_date_fmt" : "%Y年%m月%d日",
+    "date_column" : 0,
+    "key_column1" : 1,
+    "key_column2" : 8,
+    "csv_skiprows" : 9
+  },
+  "sbi1" : {
+    "sheet_name" : "裕SBI",
+    "csv_date_column_name" : "日付",
+    "csv_date_fmt" : "%Y/%m/%d",
+    "date_column" : 0,
+    "key_column1" : 1,
+    "key_column2" : 4,
+    "csv_skiprows" : 0
+  },
+  "sbi2" : {
+    "sheet_name" : "ひさSBI",
+    "csv_date_column_name" : "日付",
+    "csv_date_fmt" : "%Y/%m/%d",
+    "date_column" : 0,
+    "key_column1" : 1,
+    "key_column2" : 4,
+    "csv_skiprows" : 0
+  },
+  "AEON" : {
+    "sheet_name" : "AEON",
+    "csv_date_column_name" : "ご利用日",
+    "csv_date_fmt" : "%y%m%d",
+    "date_column" : 0,
+    "key_column1" : 2,
+    "key_column2" : 6,
+    "csv_skiprows" : 7,
+    "csv_footerrows" : 3
+  },
+  "UFJ" : {
+    "sheet_name" : "UFJ",
+    "csv_date_column_name" : "日付",
+    "csv_date_fmt" : "",
+    "date_column" : 0,
+    "key_column1" : 2,
+    "key_column2" : 5,
+    "csv_skiprows" : 0
+  }
+}

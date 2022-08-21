@@ -87,7 +87,7 @@ def update_data(ws, date_column, column_key_1, column_key_2, latest_row, latest_
 # 取り込んだcsvの最新の日付に、"内容"、"残高"が全く同じ行がある場合、正しく貼り付けできない
 
 
-def latest_copy(wb, sheet_name, csv_file: str, csv_date_column_name, csv_date_fmt, date_column, key_column1, key_column2, csv_skiprows=0, csv_footerrows=0):
+def latest_copy(wb, csv_file: str, sheet_name, csv_date_column_name, csv_date_fmt, date_column, key_column1, key_column2, csv_skiprows=0, csv_footerrows=0):
     ws = wb[sheet_name]
     latest_row = get_latest_row(ws)
     latest_date = get_latest_date(ws, latest_row, csv_date_fmt, date_column)
@@ -97,7 +97,7 @@ def latest_copy(wb, sheet_name, csv_file: str, csv_date_column_name, csv_date_fm
     update_data(ws, date_column, key_column1, key_column2, latest_row, latest_date, latest_descs, df, csv_date_fmt)
 
 
-def latest_copy_depck(wb, sheet_name, csv_file: str, csv_date_column_name, csv_date_fmt, date_column, key_column1, key_column2, csv_skiprows=0, csv_footerrows=0):
+def latest_copy_depck(wb, csv_file: str, sheet_name, csv_date_column_name, csv_date_fmt, date_column, key_column1, key_column2, csv_skiprows=0, csv_footerrows=0):
     ws = wb[sheet_name]
     latest_row = get_latest_row(ws)
     latest_date = get_latest_date(ws, latest_row, csv_date_fmt, date_column)
