@@ -22,5 +22,5 @@ def sbi_bank_get(username, password):
 
 
 if __name__ == '__main__':
-    driver = sbi_bank_get(pw.sbi_bank_b_user, pw.sbi_bank_b_pass)
+    driver = sbi_bank_get(pw.sbi_bank_b_name, pw.sbi_bank_b_pass)
     driver.close()

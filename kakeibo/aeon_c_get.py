@@ -18,7 +18,7 @@ def aeon_c_get(username, password, expiration_month, expiration_year, security_c
     ex_driver.wait_send_key_name(wait, expiration_year, "expiration_year")
     ex_driver.wait_send_key_name(wait, security_code, "securityCode")
     ex_driver.click_css(driver, "div.m-buttoncontainer_primary button")  # 認証ボタン
-    ex_driver.wait_click_css(driver, "div:nth-child(4) > div > label > div")  # CSVのチェックボックス
+    ex_driver.wait_click_css(wait, "div:nth-child(4) > div > label > div")  # CSVのチェックボックス
     ex_driver.click_css(driver, "div.m-buttoncontainer_primary button")  # ダウンロードボタン
 
     time.sleep(3)
