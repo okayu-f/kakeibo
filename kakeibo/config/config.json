@@ -1,4 +1,6 @@
 {
+  "target_file" : "./data/★家計簿220401.xlsx",
+  "save_name" : "./data/new_kakeibo_test.xlsx",
   "orico" : {
     "sheet_name" : "orico",
     "csv_date_column_name" : "ご利用日",

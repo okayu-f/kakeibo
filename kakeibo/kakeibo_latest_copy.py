@@ -23,7 +23,7 @@ try_get(orico_get, pw.orico_username, pw.orico_password)
 csv_path = latest_csv_move_to(data_path)
 
 print('opening excel...')
-wb = load_workbook('./data/★家計簿190429.xlsx')
+wb = load_workbook(config["target_file"])
 
 latest_copy(wb, csv_path, **config["orico"])
 
@@ -52,6 +52,7 @@ latest_copy(wb, csv_path, **config["AEON"])
 
 # latest_copy_depck(wb, csv_path, **config["ufj"])
 
-wb.save('data/new_kakeibo_test.xlsx')
+print('save excel...')
+wb.save(config["save_name"])
 
 print('done!')
