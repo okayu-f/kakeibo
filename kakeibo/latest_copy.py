@@ -50,7 +50,7 @@ def update_data_depck(ws, date_column, column_key_1, column_key_2, latest_row, l
     print(f'num_fmt={num_fmt}')
     date_row = ws.cell(latest_row, date_column + 1).value
 
-    for row in dataframe_to_rows(csv_df, index=None, header=None):
+    for row in dataframe_to_rows(csv_df, index=False, header=False):
         if row[date_column] < latest_date:
             continue
         if (row[date_column] == latest_date) & (str(row[column_key_1] + str(row[column_key_2])) in latest_descs):
@@ -72,7 +72,7 @@ def update_data(ws, date_column, column_key_1, column_key_2, latest_row, latest_
     print(f'num_fmt={num_fmt}')
     # date_row = ws.cell(latest_row, date_column + 1).value
 
-    for row in dataframe_to_rows(csv_df, index=None, header=None):
+    for row in dataframe_to_rows(csv_df, index=False, header=False):
         latest_row += 1
         if isinstance(row[date_column], int):
             row[date_column] = int(row[date_column].strftime(csv_date_fmt))
@@ -115,7 +115,7 @@ def latest_copy_depck(wb, csv_file: str, sheet_name, csv_date_column_name, csv_d
 
 def latest_csv_move_to(dir):
     home = os.getenv('HOME')
-    download_folder = home + '/Downloads'
+    download_folder = home + '/Downloads' if home else ''
     list_of_files = glob.glob(download_folder + '/*.csv')
     latest_file = max(list_of_files, key=os.path.getctime)
     latest_file_name = os.path.basename(latest_file)
