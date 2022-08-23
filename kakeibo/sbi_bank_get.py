@@ -3,8 +3,10 @@ from config import pw
 from util import ex_driver
 
 
-def sbi_bank_get(username, password):
-    driver = ex_driver.set_driver()
+def sbi_bank_get(username, password, driver=None):
+    if not driver:
+        driver = ex_driver.set_driver()
+
     wait = ex_driver.set_wait(driver)
     driver.get("https://www.netbk.co.jp/contents/pages/wpl010101/i010101CT/DI01010210")
 
@@ -18,6 +20,8 @@ def sbi_bank_get(username, password):
     ex_driver.wait_click_css(wait, "dl.details-download a.details-iconExcel")
 
     time.sleep(3)
+    ex_driver.click_css(driver, "a.m-icon-cm_logout")  # ログアウトボタン
+
     return driver
 
 

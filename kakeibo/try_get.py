@@ -4,8 +4,9 @@ import sys
 def try_get(func, *args):
     print(f'{func}を試みます')
     try:
-        func(*args)
+        result = func(*args)
         print(f'{func}が実行されました')
+        return result
     except Exception as e:
         print(e)
         print(type(e))

@@ -3,8 +3,10 @@ from config import pw
 from util import ex_driver
 
 
-def aeon_c_get(username, password, expiration_month, expiration_year, security_code):
-    driver = ex_driver.set_driver()
+def aeon_c_get(username, password, expiration_month, expiration_year, security_code, driver=None):
+    if not driver:
+        driver = ex_driver.set_driver()
+
     wait = ex_driver.set_wait(driver)
     driver.get("https://www.aeon.co.jp/app/")
 
@@ -21,6 +23,8 @@ def aeon_c_get(username, password, expiration_month, expiration_year, security_c
     ex_driver.wait_click_css(wait, "div:nth-child(4) > div > label > div")  # CSVのチェックボックス
     ex_driver.click_css(driver, "div.m-buttoncontainer_primary button")  # ダウンロードボタン
 
+    ex_driver.click_css(driver, "span.a-icon-logout")  # ログアウトボタン
+    ex_driver.click_css(driver, "div.ReactModalPortal button")  # 確認ボタン
     time.sleep(3)
     return driver
 

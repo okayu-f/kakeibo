@@ -3,8 +3,10 @@ from config import pw
 from util import ex_driver
 
 
-def rakuten_c_get(username, password):
-    driver = ex_driver.set_driver()
+def rakuten_c_get(username, password, driver=None):
+    if not driver:
+        driver = ex_driver.set_driver()
+
     wait = ex_driver.set_wait(driver)
     driver.get("https://www.rakuten-card.co.jp/e-navi/")
 

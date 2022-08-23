@@ -3,8 +3,10 @@ from config import pw
 from util import ex_driver
 
 
-def ufj_get(username, password):
-    driver = ex_driver.set_driver()
+def ufj_get(username, password, driver=None):
+    if not driver:
+        driver = ex_driver.set_driver()
+
     wait = ex_driver.set_wait(driver)
     driver.get("https://entry11.bk.mufg.jp/ibg/dfw/APLIN/loginib/login?_TRANID=AA000_001")
 

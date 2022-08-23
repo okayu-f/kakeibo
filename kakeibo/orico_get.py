@@ -3,12 +3,13 @@ from config import pw
 from util import ex_driver
 
 
-def orico_get(username: str, password: str):
+def orico_get(username: str, password: str, driver=None):
     '''
     username,passwordを引数にして、CSVをダウンロードする
     '''
+    if not driver:
+        driver = ex_driver.set_driver()
 
-    driver = ex_driver.set_driver()
     driver.get("https://my.orico.co.jp/eorico/login.do")
 
     ex_driver.send_key_name(driver, username, "LoginId")
