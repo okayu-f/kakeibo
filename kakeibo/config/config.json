@@ -38,6 +38,16 @@
     "csv_skiprows" : 7,
     "csv_footerrows" : 3
   },
+  "rakuten" : {
+    "sheet_name" : "楽天",
+    "csv_date_column_name" : "利用日",
+    "csv_date_fmt" : "%Y/%m/%d",
+    "date_column" : 0,
+    "key_column1" : 1,
+    "key_column2" : 4,
+    "csv_skiprows" : 0,
+    "encoding" : "utf-8"
+  },
   "UFJ" : {
     "sheet_name" : "UFJ",
     "csv_date_column_name" : "日付",

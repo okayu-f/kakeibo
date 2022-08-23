@@ -1,6 +1,7 @@
 from openpyxl.reader.excel import load_workbook
 # from ufj_get import ufj_get
 from aeon_c_get import aeon_c_get
+from rakuten_c_get import rakuten_c_get
 from latest_copy import latest_copy_depck, latest_copy, latest_csv_move_to
 import os
 import datetime
@@ -45,6 +46,11 @@ try_get(aeon_c_get, pw.aeon_c_username, pw.aeon_c_password, pw.aeon_c_expiration
 csv_path = latest_csv_move_to(data_path)
 
 latest_copy(wb, csv_path, **config["AEON"])
+
+try_get(rakuten_c_get, pw.rakuten_c_mail, pw.rakuten_c_pass)
+csv_path = latest_csv_move_to(data_path)
+
+latest_copy(wb, csv_path, **config["rakuten"])
 
 # print('ufj_get...')
 # try_get(ufj_get, pw.ufj_username, pw.ufj_password)
