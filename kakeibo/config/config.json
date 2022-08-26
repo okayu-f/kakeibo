@@ -56,5 +56,23 @@
     "key_column1" : 2,
     "key_column2" : 5,
     "csv_skiprows" : 0
+  },
+  "sbi_sec_dome" : {
+    "sheet_name" : "ゆSBI国内",
+    "csv_date_column_name" : "入出金日",
+    "csv_date_fmt" : "%Y/%m/%d",
+    "date_column" : 0,
+    "key_column1" : 3,
+    "key_column2" : 5,
+    "csv_skiprows" : 8
+  },
+  "sbi_sec_foreign" : {
+    "sheet_name" : "ゆSBI外国",
+    "csv_date_column_name" : "入出金日",
+    "csv_date_fmt" : "%Y/%m/%d",
+    "date_column" : 0,
+    "key_column1" : 3,
+    "key_column2" : 5,
+    "csv_skiprows" : 5
   }
 }
