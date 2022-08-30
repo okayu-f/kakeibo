@@ -44,10 +44,7 @@ def get_latest_descs(ws, latest_date, date_column, column_key_1, column_key_2):
 # depck = deplicate check 重複チェックのつもり
 # num_fmtの取得が2個ある。これは2つの関数に切り分けられる気がする。
 def update_data_depck(ws, date_column, column_key_1, column_key_2, latest_row, latest_date, latest_descs, csv_df, csv_date_fmt):
-    num_fmt = []
-    for cell in ws[latest_row:latest_row]:
-        num_fmt.append(cell.number_format)
-    print(f'num_fmt={num_fmt}')
+    num_fmt = get_num_fmt(ws, latest_row)
     date_row = ws.cell(latest_row, date_column + 1).value
 
     for row in dataframe_to_rows(csv_df, index=False, header=False):
@@ -65,14 +62,11 @@ def update_data_depck(ws, date_column, column_key_1, column_key_2, latest_row, l
             ws.cell(latest_row, i).number_format = num_fmt[i - 1]
 
 
-def update_data(ws, date_column, column_key_1, column_key_2, latest_row, latest_date, latest_descs, csv_df, csv_date_fmt):
-    num_fmt = []
-    for cell in ws[latest_row:latest_row]:
-        num_fmt.append(cell.number_format)
-    print(f'num_fmt={num_fmt}')
+def update_data(ws, date_column, latest_row, csv_df, csv_date_fmt, index=False):
+    num_fmt = get_num_fmt(ws, latest_row)
     # date_row = ws.cell(latest_row, date_column + 1).value
 
-    for row in dataframe_to_rows(csv_df, index=False, header=False):
+    for row in dataframe_to_rows(csv_df, index=index, header=False):
         latest_row += 1
         if isinstance(row[date_column], int):
             row[date_column] = int(row[date_column].strftime(csv_date_fmt))
@@ -82,6 +76,14 @@ def update_data(ws, date_column, column_key_1, column_key_2, latest_row, latest_
             ws.cell(latest_row, i).value = v
             ws.cell(latest_row, i).number_format = num_fmt[i - 1]
 
+
+def get_num_fmt(ws, latest_row):
+    num_fmt = []
+    for cell in ws[latest_row:latest_row]:
+        num_fmt.append(cell.number_format)
+    print(f'num_fmt={num_fmt}')
+    return num_fmt
+
 # 既知のバグ
 # "日付"、"内容"、"残高"等のkeyで判定をしているため、
 # 取り込んだcsvの最新の日付に、"内容"、"残高"が全く同じ行がある場合、正しく貼り付けできない
@@ -90,12 +92,10 @@ def update_data(ws, date_column, column_key_1, column_key_2, latest_row, latest_
 def latest_copy(wb, csv_file: str, sheet_name, csv_date_column_name, csv_date_fmt, date_column, key_column1, key_column2, csv_skiprows=0, csv_footerrows=0, encoding='Shift-JIS'):
     ws = wb[sheet_name]
     latest_row = get_latest_row(ws)
-    latest_date = get_latest_date(ws, latest_row, csv_date_fmt, date_column)
-    latest_descs = get_latest_descs(ws, latest_date, date_column, key_column1, key_column2)
     df = pd.read_csv(csv_file, encoding=encoding, thousands=',', skiprows=csv_skiprows, skipfooter=csv_footerrows, engine='python')
     df.sort_values(csv_date_column_name, inplace=True)
     df[csv_date_column_name] = pd.to_datetime(df[csv_date_column_name], format=csv_date_fmt)
-    update_data(ws, date_column, key_column1, key_column2, latest_row, latest_date, latest_descs, df, csv_date_fmt)
+    update_data(ws, date_column, latest_row, df, csv_date_fmt)
 
 
 def latest_copy_depck(wb, csv_file: str, sheet_name, csv_date_column_name, csv_date_fmt, date_column, key_column1, key_column2, csv_skiprows=0, csv_footerrows=0, encoding='Shift-JIS'):
@@ -108,6 +108,11 @@ def latest_copy_depck(wb, csv_file: str, sheet_name, csv_date_column_name, csv_d
     df[csv_date_column_name] = pd.to_datetime(df[csv_date_column_name], format=csv_date_fmt)
     update_data_depck(ws, date_column, key_column1, key_column2, latest_row, latest_date, latest_descs, df, csv_date_fmt)
 
+
+def latest_copy_df(wb, df, sheet_name, csv_date_fmt, date_column, index=False):
+    ws = wb[sheet_name]
+    latest_row = get_latest_row(ws)
+    update_data(ws, date_column, latest_row, df, csv_date_fmt, index=index)
 
 # if over_write:
 #     wb.save(xlsx_name)
@@ -134,5 +139,5 @@ if __name__ == '__main__':
     latest_row = get_latest_row(ws)
     latest_date = get_latest_date(ws, latest_row, 0)
     latest_descs = get_latest_descs(ws, latest_date, 0, 1, 4)
-    update_data(ws, 0, 1, 4, latest_row, latest_date, latest_descs, df, '%Y/%m/%d')
+    update_data(ws, 0, latest_row, df, '%Y/%m/%d')
     wb.save('new_hogehoge.xlsx')
