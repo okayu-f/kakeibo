@@ -8,10 +8,10 @@ from openpyxl.utils.dataframe import dataframe_to_rows
 import pandas as pd
 
 
-def get_latest_row(ws, date_column=0):
+def get_latest_row(ws, column=0):
     latest_row = 2
     for row in ws.iter_rows(min_row=latest_row + 1):
-        if row[date_column].value is None:
+        if row[column].value is None:
             break
         latest_row += 1
     print(f'latest_row= {latest_row}')
