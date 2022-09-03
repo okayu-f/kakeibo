@@ -21,8 +21,9 @@ unit_prices = []
 prices = []
 
 
-def login_view_history():
-    driver = ex_driver.set_driver()
+def login_view_history(driver=None):
+    if not driver:
+        driver = ex_driver.set_driver()
     wait = ex_driver.set_wait(driver)
 
     driver.get("https://www.amazon.co.jp/")
@@ -61,7 +62,6 @@ def history_to_df():
     df['order_dates'] = pd.to_datetime(df['order_dates'], format='%Y年%m月%d日')
     df.sort_values('order_dates', inplace=True, kind='mergesort')
     return df
-
 
 
 def get_invoice_html(order_num, driver):
@@ -169,10 +169,10 @@ def digital_order_detail_get(html, num):
             unit_prices.append(int(unit_price.get_text(strip=True).replace('￥', '').replace(',', '')))
 
 
-def fetch(latest_order_num=None):
+def fetch(latest_order_num=None, driver=None):
     invoice_htmls = []
 
-    driver = login_view_history()
+    driver = login_view_history(driver)
     order_nums = get_order_nums(driver, latest_order_num)
     for order_num in order_nums:
         time.sleep(1)

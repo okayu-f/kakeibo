@@ -9,6 +9,7 @@ import json
 from sbi_bank_get import sbi_bank_get
 from orico_get import orico_get
 import sbi_sec_get
+import update_amazon_order_history
 from try_get import try_get
 from config import pw
 
@@ -62,6 +63,8 @@ driver = try_get(sbi_sec_get.add_get_foreign_currency, driver)
 csv_path = latest_csv_move_to(data_path)
 
 latest_copy_depck(wb, csv_path, **config["sbi_sec_foreign"])
+
+driver = update_amazon_order_history.execute(wb, driver=driver)
 
 # print('ufj_get...')
 # try_get(ufj_get, pw.ufj_username, pw.ufj_password)
