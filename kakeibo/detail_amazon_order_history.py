@@ -32,6 +32,8 @@ def login_view_history(driver=None):
     ex_driver.wait_click_css(wait, "#continue")
     ex_driver.wait_send_key_css(wait, log_in_pass, "#ap_password")
     ex_driver.wait_click_css(wait, "#auth-signin-button")
+    ex_driver.wait_click_css(wait, "#a-autoid-1-announce")
+    ex_driver.wait_click_css(wait, "#time-filter_2")
 
     time.sleep(3)
     return driver
@@ -41,7 +43,7 @@ def get_order_nums(driver, already_got_num=None):
     order_nums = []
     wait = WebDriverWait(driver, 5)
     while True:
-        order_num_elems = driver.find_elements(By.CSS_SELECTOR, 'bdi')
+        order_num_elems = driver.find_elements(By.CSS_SELECTOR, 'div.yohtmlc-order-id > span:nth-child(2)')
         for elem in order_num_elems:
             order_num = elem.text
             if order_num == already_got_num:
@@ -192,8 +194,8 @@ def fetch(latest_order_num=None, driver=None):
 
 
 if __name__ == '__main__':
-    latest_order_num = '503-6955607-7498213'
+    latest_order_num = '249-3377026-0559031'
     fetch(latest_order_num)
     df = history_to_df()
-    df.to_csv('./result/history_csv_out.csv', encoding='utf-8')
+    df.to_csv('.data//history_csv_out.csv', encoding='utf-8')
     print('done')
