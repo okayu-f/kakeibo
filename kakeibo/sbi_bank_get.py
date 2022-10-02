@@ -10,7 +10,7 @@ def sbi_bank_get(username, password, driver=None):
     wait = ex_driver.set_wait(driver)
     driver.get("https://www.netbk.co.jp/contents/pages/wpl010101/i010101CT/DI01010210")
 
-    ex_driver.send_key_name(driver, username, "userName")
+    ex_driver.send_key_name(driver, username, "userNameNewLogin")
     ex_driver.send_key_css(driver, password, "#loginPwdSet")
     ex_driver.click_css(driver, "button")  # ログインボタン
     ex_driver.wait_click_css(wait, "span.m-icon-ps_details")
