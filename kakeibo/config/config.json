@@ -74,5 +74,14 @@
     "key_column1" : 3,
     "key_column2" : 5,
     "csv_skiprows" : 5
+  },
+  "vpass" : {
+    "sheet_name" : "Vpass",
+    "csv_date_column_name" : "岡田　裕　様",
+    "csv_date_fmt" : "%Y/%m/%d",
+    "date_column" : 0,
+    "key_column1" : 1,
+    "key_column2" : 2,
+    "csv_skiprows" : 0
   }
 }

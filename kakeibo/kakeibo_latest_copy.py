@@ -8,6 +8,7 @@ import datetime
 import json
 from sbi_bank_get import sbi_bank_get
 from orico_get import orico_get
+from vpass_get import vpass_get
 import sbi_sec_get
 import update_amazon_order_history
 from try_get import try_get
