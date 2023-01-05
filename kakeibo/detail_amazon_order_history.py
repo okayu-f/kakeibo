@@ -32,8 +32,8 @@ def login_view_history(driver=None):
     ex_driver.wait_click_css(wait, "#continue")
     ex_driver.wait_send_key_css(wait, log_in_pass, "#ap_password")
     ex_driver.wait_click_css(wait, "#auth-signin-button")
-    ex_driver.wait_click_css(wait, "#a-autoid-1-announce")
-    ex_driver.wait_click_css(wait, "#time-filter_2")
+    # ex_driver.wait_click_css(wait, "#a-autoid-1-announce")  # 注文期間
+    # ex_driver.wait_click_css(wait, "#time-filter_2")  # 当年を選択
 
     time.sleep(3)
     return driver
@@ -110,7 +110,7 @@ def order_detail_get(html, num):
 
         price_tags = order_table.select("tr:nth-child(2) td:nth-child(3)")
         for price_tag in price_tags:
-            unit_price = int(price_tag.get_text(strip=True).replace('￥ ', '').replace(',', ''))
+            unit_price = int(price_tag.get_text(strip=True).replace('￥', '').replace(' ', '').replace(',', ''))
             unit_prices.append(unit_price)
 
     payment_informations = order_tables[-1].select("tbody tbody tbody tbody tbody tbody tr")
@@ -127,7 +127,7 @@ def order_detail_get(html, num):
         shipment_dates.append('-')
         descs.append(tds[0].get_text(strip=True).replace('：', ''))
         quantities.append(1)
-        unit_prices.append(int(tds[1].get_text(strip=True).replace('￥ ', '').replace(',', '')))
+        unit_prices.append(int(tds[1].get_text(strip=True).replace('￥', '').replace(' ', '').replace(',', '')))
 
 
 def digital_order_detail_get(html, num):
@@ -153,7 +153,7 @@ def digital_order_detail_get(html, num):
 
     price_tags = soup.select("body > div.orderSummary td:nth-child(2)")[2:]
     for price_tag in price_tags:
-        unit_price = int(price_tag.get_text(strip=True).replace('￥ ', '').replace(',', ''))
+        unit_price = int(price_tag.get_text(strip=True).replace('￥', '').replace(' ', '').replace(',', ''))
         unit_prices.append(unit_price)
 
     payment_informations = soup.select("div.a-column.a-span5.pmts-amount-breakdown.a-span-last > div")
@@ -168,7 +168,7 @@ def digital_order_detail_get(html, num):
         quantities.append(1)
         unit_price = payment_information.select_one("div.a-column.a-span4.a-text-right.a-span-last")
         if unit_price:
-            unit_prices.append(int(unit_price.get_text(strip=True).replace('￥', '').replace(',', '')))
+            unit_prices.append(int(unit_price.get_text(strip=True).replace('￥', '').replace(' ', '').replace(',', '')))
 
 
 def fetch(latest_order_num=None, driver=None):
