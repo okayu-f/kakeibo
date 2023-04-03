@@ -32,6 +32,7 @@ def login_view_history(driver=None):
     ex_driver.wait_click_css(wait, "#continue")
     ex_driver.wait_send_key_css(wait, log_in_pass, "#ap_password")
     ex_driver.wait_click_css(wait, "#auth-signin-button")
+    input("2段階認証待ち。完了したらenterを")
     # ex_driver.wait_click_css(wait, "#a-autoid-1-announce")  # 注文期間
     # ex_driver.wait_click_css(wait, "#time-filter_2")  # 当年を選択
 
@@ -39,7 +40,7 @@ def login_view_history(driver=None):
     return driver
 
 
-def get_order_nums(driver, already_got_num=None):
+def get_order_nums(driver, already_got_num=None, skip_order_nums=None):
     order_nums = []
     wait = WebDriverWait(driver, 5)
     while True:
@@ -48,6 +49,8 @@ def get_order_nums(driver, already_got_num=None):
             order_num = elem.text
             if order_num == already_got_num:
                 return order_nums
+            if order_num in skip_order_nums:
+                continue
             order_nums.append(elem.text)
         try:
             next_btn = wait.until(expected_conditions.element_to_be_clickable((By.CSS_SELECTOR, "li.a-last > a")))
@@ -105,12 +108,18 @@ def order_detail_get(html, num):
         for order_product in order_products:
             order_text = order_product.get_text(strip=True)
             word_count_unit = order_text.index('点')
-            quantity = int(order_text[0:word_count_unit])
+            if 'g' in order_text[0:word_count_unit]:
+                quantity = 1 # グラム売りは1点として記録する
+            else:
+                quantity = int(order_text[0:word_count_unit])
             quantities.append(quantity)
 
         price_tags = order_table.select("tr:nth-child(2) td:nth-child(3)")
         for price_tag in price_tags:
-            unit_price = int(price_tag.get_text(strip=True).replace('￥', '').replace(' ', '').replace(',', ''))
+            unit_price = price_tag.get_text(strip=True).replace('￥', '').replace(' ', '').replace(',', '')
+            if 'g' in unit_price:
+                unit_price = unit_price.split("\n")[-1] # グラム売りは総額を単価として記録する
+            unit_price = int(unit_price)
             unit_prices.append(unit_price)
 
     payment_informations = order_tables[-1].select("tbody tbody tbody tbody tbody tbody tr")
@@ -171,11 +180,11 @@ def digital_order_detail_get(html, num):
             unit_prices.append(int(unit_price.get_text(strip=True).replace('￥', '').replace(' ', '').replace(',', '')))
 
 
-def fetch(latest_order_num=None, driver=None):
+def fetch(latest_order_num=None, driver=None, skip_order_nums=None):
     invoice_htmls = []
 
     driver = login_view_history(driver)
-    order_nums = get_order_nums(driver, latest_order_num)
+    order_nums = get_order_nums(driver, latest_order_num, skip_order_nums)
     for order_num in order_nums:
         time.sleep(1)
         invoice_html = get_invoice_html(order_num, driver)
@@ -184,6 +193,7 @@ def fetch(latest_order_num=None, driver=None):
     driver.close()
 
     for sourse, num in zip(invoice_htmls, order_nums):
+        print(num)
         if num[0] == 'D':
             digital_order_detail_get(sourse, num)
         else:
