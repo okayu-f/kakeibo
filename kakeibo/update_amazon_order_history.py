@@ -3,7 +3,7 @@ import latest_copy
 from openpyxl import load_workbook
 
 
-def execute(wb, sheet_name='Ama履歴', order_num_column=0, date_column=2, date_fmt='%Y-%m-%d', driver=None, skip_order_nums=None):
+def execute(wb, sheet_name='Ama履歴', order_num_column=0, date_column=2, date_fmt='%Y-%m-%d', driver=None, skip_order_nums=[]):
     ws = wb[sheet_name]
     latest_row = latest_copy.get_latest_row(ws)
     print(f'latest_row={latest_row}')

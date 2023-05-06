@@ -40,7 +40,7 @@ def login_view_history(driver=None):
     return driver
 
 
-def get_order_nums(driver, already_got_num=None, skip_order_nums=None):
+def get_order_nums(driver, already_got_num=None, skip_order_nums=[]):
     order_nums = []
     wait = WebDriverWait(driver, 5)
     while True:
@@ -180,7 +180,7 @@ def digital_order_detail_get(html, num):
             unit_prices.append(int(unit_price.get_text(strip=True).replace('￥', '').replace(' ', '').replace(',', '')))
 
 
-def fetch(latest_order_num=None, driver=None, skip_order_nums=None):
+def fetch(latest_order_num=None, driver=None, skip_order_nums=[]):
     invoice_htmls = []
 
     driver = login_view_history(driver)
